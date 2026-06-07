@@ -1,22 +1,30 @@
-# 🚀 LeadPipeline — Open-Source Lead Gen + Outreach Automation
+<div align="center">
+  <img src="https://img.shields.io/badge/100%25-FREE_FOREVER-22d3ee?style=for-the-badge&logo=github&logoColor=white&labelColor=03050a" alt="100% FREE FOREVER" />
+  <img src="https://img.shields.io/badge/OPEN-SOURCE-2ef2c3?style=for-the-badge&logo=opensourceinitiative&logoColor=white&labelColor=03050a" />
+  <img src="https://img.shields.io/badge/MIT-LICENSE-f6c76a?style=for-the-badge&labelColor=03050a" />
+</div>
 
-**Scrape → Pitch → Demo → Close.** The first open-source complete sales pipeline for AI agents.
+# 🚀 LeadPipeline — The 100% Free Apollo Alternative
+
+**Scrape → Pitch → Demo → Close.** The only complete open-source sales pipeline. No credit card. No trial. No $49/mo. Just results.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![GitHub stars](https://img.shields.io/github/stars/AI-Invention/lead-pipeline)](https://github.com/AI-Invention/lead-pipeline/stargazers)
 
+> **💰 Save $588/year vs Apollo.** Same pipeline. Zero cost. Self-hosted. Forever.
+
 ## ❓ Why LeadPipeline?
 
-Most open-source tools only do ONE thing — scrape leads, OR send emails, OR track replies. Businesses need the FULL loop.
+In 2026, paying $49/mo for lead generation is unnecessary. Big companies are going open-source. So should you.
 
-**LeadPipeline is the first open-source tool that does it all:**
+Most tools only do ONE thing — scrape leads, OR send emails, OR track replies. LeadPipeline is the first to deliver the **complete pipeline** — free:
 
 ```
 Google Maps Scraper → Google Sheets CRM → Personalized Pitches → Demo Showcase → Reply Tracking
 ```
 
-No paid API required. No $49/mo subscription. Just Python + free tools.
+**Zero API costs. Zero subscriptions. Just Python + free tools.**
 
 ## ⚡ Quick Start
 
@@ -113,19 +121,23 @@ Or deploy to any static host (Netlify, Vercel, GitHub Pages).
 - **SaaS startups:** Build your first 100-customer pipeline
 - **AI agents:** Integrate with your existing agent for end-to-end sales
 
-## 🔓 100% Free & Open Source
+## 💰 Pricing — $0 vs $588/year
 
-| Feature | Apollo.io | Lemlist | LeadPipeline |
-|---------|:---------:|:-------:|:------------:|
-| Price | $49/mo | $32/mo | **$0** |
-| Google Maps Scraper | ✅ | ❌ | ✅ |
-| Email Outreach | ✅ | ✅ | ✅ |
+| | Apollo.io | Lemlist | **LeadPipeline** |
+|---|:---:|:---:|:---:|
+| **Monthly Cost** | $49 | $32 | **$0** |
+| **Annual Cost** | $588 | $384 | **$0** |
+| Google Maps Scraper | Basic | ❌ | ✅ Full |
+| Email Outreach | ✅ | ✅ | ✅ Unlimited |
 | Reply Tracking | ✅ | ✅ | ✅ |
 | Demo Showcase | ❌ | ❌ | ✅ |
 | Open Source | ❌ | ❌ | ✅ |
 | Self-Hosted | ❌ | ❌ | ✅ |
+| No Credit Card | ❌ | ❌ | ✅ |
 
-## 🗺️ Roadmap
+> **🆓 Forever free. No catch. No credit card. No "free trial" that expires. Just clone and run.**
+
+## 🗺️ 2026 Roadmap — What Big Companies Are Building
 
 - [x] Google Maps scraping (Apify)
 - [x] SMTP email outreach
