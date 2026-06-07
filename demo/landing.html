@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Invention — Client Demos</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',system-ui,sans-serif;background:#03050a;color:#f4fbff;overflow-x:hidden}
+  
+  /* Grid overlay */
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(34,211,238,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+
+  /* Glow blobs */
+  .glow-top{position:fixed;top:-20%;left:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(34,211,238,.12),transparent 70%);pointer-events:none;z-index:0}
+  .glow-bot{position:fixed;bottom:-20%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(46,242,195,.10),transparent 70%);pointer-events:none;z-index:0}
+  .glow-mid{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(246,199,106,.04),transparent 60%);pointer-events:none;z-index:0}
+
+  .container{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+  /* NAV */
+  nav{position:relative;z-index:2;border-bottom:1px solid rgba(255,255,255,.06);backdrop-filter:blur(20px);background:rgba(3,5,10,.7)}
+  .nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#22d3ee,#2ef2c3);border-radius:8px;display:grid;place-items:center;font-weight:900;font-size:13px;color:#03050a;box-shadow:0 0 24px rgba(34,211,238,.25)}
+  .logo-text{font-weight:700;font-size:15px;letter-spacing:-.02em;color:#f4fbff}
+  .nav-cta{padding:8px 20px;border-radius:8px;font-weight:600;font-size:13px;text-decoration:none;transition:.3s;background:linear-gradient(135deg,#22d3ee,#2ef2c3);color:#03050a;box-shadow:0 4px 20px rgba(34,211,238,.2)}
+  .nav-cta:hover{box-shadow:0 6px 28px rgba(34,211,238,.35);transform:translateY(-1px)}
+
+  /* HERO */
+  .hero{padding:100px 0 60px;text-align:center;position:relative;z-index:1}
+  .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:50px;border:1px solid rgba(34,211,238,.25);background:rgba(34,211,238,.06);font-size:13px;font-weight:500;color:#22d3ee;margin-bottom:28px;letter-spacing:.02em}
+  .badge-dot{width:7px;height:7px;border-radius:50%;background:#2ef2c3;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .hero h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:900;line-height:1.08;letter-spacing:-.03em;margin-bottom:20px}
+  .hero h1 .grad{background:linear-gradient(135deg,#22d3ee 20%,#2ef2c3 50%,#f6c76a 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero p{font-size:1.15rem;color:#8899aa;max-width:580px;margin:0 auto 44px;line-height:1.65}
+
+  /* STATS */
+  .stats{display:flex;justify-content:center;gap:48px;margin-top:32px;flex-wrap:wrap}
+  .stat{text-align:center}
+  .stat-num{font-size:2.2rem;font-weight:800;letter-spacing:-.02em;background:linear-gradient(135deg,#f4fbff,#c8d6e0);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .stat-lab{font-size:.82rem;color:#708391;margin-top:4px;font-weight:500;letter-spacing:.02em}
+
+  /* DEMO SECTION */
+  .demos-section{padding:40px 0 80px;position:relative;z-index:1}
+  .section-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#22d3ee;margin-bottom:12px}
+  .section-title{font-size:2rem;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+  .section-sub{color:#708391;font-size:1rem;margin-bottom:40px}
+
+  .demo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+  
+  .demo-card{position:relative;border-radius:16px;border:1px solid rgba(255,255,255,.07);background:rgba(9,20,28,.65);backdrop-filter:blur(12px);padding:32px;text-decoration:none;color:inherit;transition:all .35s cubic-bezier(.4,0,.2,1);overflow:hidden}
+  .demo-card::before{content:'';position:absolute;inset:0;border-radius:16px;opacity:0;transition:opacity .35s;background:linear-gradient(135deg,rgba(34,211,238,.05),rgba(46,242,195,.04));pointer-events:none}
+  .demo-card:hover{border-color:rgba(34,211,238,.25);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.4),0 0 40px rgba(34,211,238,.06)}
+  .demo-card:hover::before{opacity:1}
+  
+  .demo-icon{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;font-size:22px;margin-bottom:20px}
+  .demo-icon.fnb{background:rgba(246,199,106,.12);color:#f6c76a}
+  .demo-icon.web{background:rgba(34,211,238,.12);color:#22d3ee}
+  .demo-icon.ai{background:rgba(46,242,195,.12);color:#2ef2c3}
+  .demo-icon.ecom{background:rgba(168,130,255,.12);color:#a882ff}
+
+  .demo-tag{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 10px;border-radius:6px;margin-bottom:12px}
+  .tag-live{background:rgba(46,242,195,.12);color:#2ef2c3}
+  .tag-demo{background:rgba(34,211,238,.1);color:#22d3ee}
+  .tag-soon{background:rgba(246,199,106,.1);color:#f6c76a}
+
+  .demo-card h3{font-size:1.25rem;font-weight:700;margin-bottom:6px;letter-spacing:-.01em}
+  .demo-card .desc{font-size:.88rem;color:#8899aa;line-height:1.55;margin-bottom:16px}
+  .demo-features{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+  .demo-feat{font-size:.72rem;padding:4px 10px;border-radius:6px;background:rgba(255,255,255,.04);color:#708391;font-weight:500}
+  .demo-arrow{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:600;color:#22d3ee;transition:gap .25s}
+  .demo-card:hover .demo-arrow{gap:12px}
+
+  /* CTA */
+  .cta-section{padding:60px 0 100px;text-align:center;position:relative;z-index:1}
+  .cta-box{border-radius:20px;border:1px solid rgba(34,211,238,.1);background:rgba(9,20,28,.5);backdrop-filter:blur(16px);padding:56px 32px;position:relative;overflow:hidden}
+  .cta-box::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at center,rgba(34,211,238,.04),transparent 60%);pointer-events:none}
+  .cta-box h2{font-size:2rem;font-weight:800;letter-spacing:-.02em;margin-bottom:12px;position:relative}
+  .cta-box p{color:#8899aa;font-size:1.05rem;max-width:480px;margin:0 auto 28px;position:relative}
+  .cta-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;background:linear-gradient(135deg,#22d3ee,#2ef2c3);color:#03050a;box-shadow:0 4px 28px rgba(34,211,238,.25);transition:.3s;position:relative}
+  .cta-btn:hover{box-shadow:0 6px 36px rgba(34,211,238,.4);transform:translateY(-2px)}
+
+  /* FOOTER */
+  footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0;position:relative;z-index:1}
+  .footer-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .footer-text{font-size:.82rem;color:#556677}
+  .footer-link{font-size:.82rem;color:#708391;text-decoration:none;transition:.2s}
+  .footer-link:hover{color:#22d3ee}
+
+  /* ANIMATIONS */
+  .fade-up{opacity:0;transform:translateY(24px);animation:fadeUp .7s ease forwards}
+  .fade-up:nth-child(2){animation-delay:.1s}
+  .fade-up:nth-child(3){animation-delay:.2s}
+  .fade-up:nth-child(4){animation-delay:.3s}
+  @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+  @media(max-width:640px){
+    .hero{padding:60px 0 40px}
+    .stats{gap:28px}
+    .demo-grid{grid-template-columns:1fr}
+    .footer-inner{flex-direction:column;text-align:center}
+  }
+</style>
+</head>
+<body>
+<div class="glow-top"></div>
+<div class="glow-bot"></div>
+<div class="glow-mid"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="https://aiinvention.tech" class="logo">
+      <div class="logo-icon">AI</div>
+      <span class="logo-text">AI Invention</span>
+    </a>
+    <a href="https://aiinvention.tech/contact" class="nav-cta">Start a Project</a>
+  </div>
+</nav>
+
+<main class="container">
+  <section class="hero">
+    <div class="badge"><span class="badge-dot"></span> Live Demo Portfolio</div>
+    <h1>See What <span class="grad">AI-Powered</span><br>Digital Looks Like</h1>
+    <p>Production-grade demos built for real businesses. Each one showcases what your customers experience when AI Invention delivers.</p>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">10K+</div><div class="stat-lab">Leads Generated</div></div>
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-lab">Businesses Served</div></div>
+      <div class="stat"><div class="stat-num">10+</div><div class="stat-lab">Countries</div></div>
+    </div>
+  </section>
+
+  <section class="demos-section">
+    <div class="section-label">Client Demos</div>
+    <h2 class="section-title">Live Previews</h2>
+    <p class="section-sub">Share these with your clients to show exactly what they'll get.</p>
+    
+    <div class="demo-grid">
+      <!-- FNB Demo -->
+      <a href="/fnb/" class="demo-card fade-up">
+        <span class="demo-tag tag-live">Live</span>
+        <div class="demo-icon fnb">🍽️</div>
+        <h3>F&B Enterprise</h3>
+        <p class="desc">Complete restaurant digital storefront — menu, online ordering, store locator, and brand landing. Built for multi-location chains.</p>
+        <div class="demo-features">
+          <span class="demo-feat">Menu Engine</span>
+          <span class="demo-feat">Store Locator</span>
+          <span class="demo-feat">Online Ordering</span>
+          <span class="demo-feat">SEO Ready</span>
+        </div>
+        <span class="demo-arrow">View Demo →</span>
+      </a>
+
+      <!-- Coming Soon Demos -->
+      <div class="demo-card fade-up" style="opacity:.7">
+        <span class="demo-tag tag-soon">Coming Soon</span>
+        <div class="demo-icon ecom">🛒</div>
+        <h3>E-Commerce Platform</h3>
+        <p class="desc">Full online store with AI product recommendations, cart, checkout flow, and inventory management dashboard.</p>
+        <div class="demo-features">
+          <span class="demo-feat">AI Recommendations</span>
+          <span class="demo-feat">Cart & Checkout</span>
+          <span class="demo-feat">Dashboard</span>
+        </div>
+        <span class="demo-arrow">Notify Me →</span>
+      </div>
+
+      <div class="demo-card fade-up" style="opacity:.7">
+        <span class="demo-tag tag-soon">Coming Soon</span>
+        <div class="demo-icon ai">🤖</div>
+        <h3>AI Chatbot Widget</h3>
+        <p class="desc">Embeddable AI receptionist that qualifies leads, books meetings, and answers questions 24/7 on any website.</p>
+        <div class="demo-features">
+          <span class="demo-feat">Lead Capture</span>
+          <span class="demo-feat">Meeting Booking</span>
+          <span class="demo-feat">24/7 Support</span>
+        </div>
+        <span class="demo-arrow">Notify Me →</span>
+      </div>
+
+      <div class="demo-card fade-up" style="opacity:.7">
+        <span class="demo-tag tag-soon">Coming Soon</span>
+        <div class="demo-icon web">🏢</div>
+        <h3>SaaS Landing Page</h3>
+        <p class="desc">Conversion-optimized SaaS website with pricing, features, testimonials, and interactive product demo section.</p>
+        <div class="demo-features">
+          <span class="demo-feat">Pricing Tiers</span>
+          <span class="demo-feat">Interactive Demo</span>
+          <span class="demo-feat">Testimonials</span>
+        </div>
+        <span class="demo-arrow">Notify Me →</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-box">
+      <h2>Want a Demo Like This?</h2>
+      <p>We build custom demos for your specific industry — restaurants, SaaS, e-commerce, real estate, healthcare, and more.</p>
+      <a href="https://aiinvention.tech/contact" class="cta-btn">Get Your Demo Built →</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-text">© 2026 AI Invention. All demos are live portfolio work.</span>
+    <div style="display:flex;gap:24px">
+      <a href="https://aiinvention.tech" class="footer-link">aiinvention.tech</a>
+      <a href="https://aiinvention.tech/contact" class="footer-link">Contact</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

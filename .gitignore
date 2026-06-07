@@ -1,0 +1,27 @@
+# Secrets — NEVER commit these
+*.json
+!package*.json
+credentials.json
+*.key
+*.pem
+
+# Config files (copy from .example)
+config.py
+config_reply.py
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Output
+leads.json
+pitched.json
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
